@@ -9,13 +9,13 @@ Point* createPointsArray(int length) {
 }
 
 void inputError(char* message) {
-    printf("%s\n", message);
+    printf("INPUT ERROR - %s\n", message);
     exit(EXIT_FAILURE);
 }
 
 void getPointsFromInput(char* path, Point** points, int* totalPoints, int* xa, int* xb) {
     FILE* file = fopen(path, "r");
-    if (file == NULL) inputError("ERROR - Cannot read file");
+    if (file == NULL) inputError("Cannot read file");
 
     fscanf(file, "%d %d %d", totalPoints, xa, xb);
 
@@ -23,7 +23,7 @@ void getPointsFromInput(char* path, Point** points, int* totalPoints, int* xa, i
 
     for (int i = 0; i < *totalPoints; i++) {
         if (fscanf(file, "%d %d", &((*points)[i].x), &((*points)[i].y)) != 2) {
-            inputError("ERROR - Missing points");
+            inputError("Missing points");
         }
     }
 }
