@@ -1,0 +1,6 @@
+# binaries and build-only files
+bin/*
+build/*
+
+# test input files
+tests/*
