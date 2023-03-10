@@ -5,6 +5,6 @@ typedef struct {
     int x, y;  // Coordinates
 } Point;
 
-Point* getPointsFromInput(char*, int*, int*, int*);
+void getPointsFromInput(char*, Point**, int*, int*, int*);
 
 #endif

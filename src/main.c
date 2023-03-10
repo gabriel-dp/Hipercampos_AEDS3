@@ -8,7 +8,8 @@ int main(int argc, char* argv[]) {
     getArgs(&inputPath, &outputPath, argc, argv);
 
     int totalPoints, xa, xb;
-    Point* points = getPointsFromInput(inputPath, &totalPoints, &xa, &xb);
+    Point* points = NULL;
+    getPointsFromInput(inputPath, &points, &totalPoints, &xa, &xb);
 
     printf("|%d|%d|%d|\n", totalPoints, xa, xb);
     for (int i = 0; i < totalPoints; i++) {

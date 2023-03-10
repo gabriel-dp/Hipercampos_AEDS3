@@ -13,19 +13,17 @@ void inputError(char* message) {
     exit(EXIT_FAILURE);
 }
 
-Point* getPointsFromInput(char* path, int* totalPoints, int* xa, int* xb) {
+void getPointsFromInput(char* path, Point** points, int* totalPoints, int* xa, int* xb) {
     FILE* file = fopen(path, "r");
     if (file == NULL) inputError("ERROR - Cannot read file");
 
     fscanf(file, "%d %d %d", totalPoints, xa, xb);
 
-    Point* newPoints = createPointsArray(*totalPoints);
+    *points = createPointsArray(*totalPoints);
 
     for (int i = 0; i < *totalPoints; i++) {
-        if (fscanf(file, "%d %d", &(newPoints[i].x), &(newPoints[i].y)) != 2) {
+        if (fscanf(file, "%d %d", &((*points)[i].x), &((*points)[i].y)) != 2) {
             inputError("ERROR - Missing points");
         }
     }
-
-    return newPoints;
 }
