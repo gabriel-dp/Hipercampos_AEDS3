@@ -10,6 +10,7 @@ int main(int argc, char* argv[]) {
     int totalPoints, xa, xb;
     Point* points = NULL;
     getPointsFromInput(inputPath, &points, &totalPoints, &xa, &xb);
+    sortPointsByY(points, totalPoints);
 
     printf("|%d|%d|%d|\n", totalPoints, xa, xb);
     for (int i = 0; i < totalPoints; i++) {
