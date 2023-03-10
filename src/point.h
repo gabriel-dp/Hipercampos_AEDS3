@@ -5,7 +5,6 @@ typedef struct {
     int x, y;  // Coordinates
 } Point;
 
-Point* createPointsArray(int);
-int isInside(Point, Point, Point, Point);
+Point* getPointsFromInput(char*, int*, int*, int*);
 
 #endif
