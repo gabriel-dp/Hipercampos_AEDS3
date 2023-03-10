@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 void errorAtArgs(char* programPath) {
-    printf("Correct usage: '%s -i {inputPath} -o {outputPath}'\n", programPath);
+    printf("ARGS ERROR - Correct usage: '%s -i {inputPath} -o {outputPath}'\n", programPath);
     exit(EXIT_FAILURE);
 }
 
