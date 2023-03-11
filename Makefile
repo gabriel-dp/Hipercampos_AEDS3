@@ -6,11 +6,13 @@ BINARY := out
 
 # Code directory structure
 SRCDIR := src
+INCDIR := include	
 BINDIR := bin
 BUILDDIR := build
 
 # Compiler flags
-CFLAGS := -lm -Wall
+CFLAGS := -Wall -I$(INCDIR)
+LDFLAGS := -lm
 
 # %.o file names
 NAMES := $(notdir $(basename $(wildcard $(SRCDIR)/*.c)))
@@ -20,12 +22,12 @@ OBJECTS :=$(patsubst %,$(BUILDDIR)/%.o,$(NAMES))
 # Rule for link and generate the binary file
 all: $(OBJECTS)
 	@ if [ ! -d ./$(BINDIR) ]; then mkdir -p $(BINDIR);	fi
-	$(CC) -o $(BINDIR)/$(BINARY) $+ $(CFLAGS)
+	$(CC) -o $(BINDIR)/$(BINARY) $+ $(LDFLAGS)
 
 # Rule for object binaries compilation
 $(BUILDDIR)/%.o: $(SRCDIR)/%.c
 	@ if [ ! -d ./$(BINDIR) ]; then mkdir -p $(BUILDDIR);fi
-	$(CC) -c $^ -o $@ $(CFLAGS)
+	$(CC) -c $^ -o $@ $(CFLAGS) 
 
 
 
