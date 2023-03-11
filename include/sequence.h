@@ -20,7 +20,7 @@ Sequence getLongestPath(Sequence, Coordinate, Coordinate);
 // Functions used in pointio.c
 Sequence createSequence(int length);
 
-// Functions used just inside sequence.c
+// Functions used only inside sequence.c
 int validPoint(Point, Point, Coordinate, Coordinate);
 void addPointToSequence(Sequence*, Point);
 void restoreSequence(Sequence*, int);

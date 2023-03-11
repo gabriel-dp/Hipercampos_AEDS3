@@ -1,7 +1,10 @@
 #ifndef ARGS_H
 #define ARGS_H
 
-void errorAtArgs(char*);
+// Functions used in main.c
 void getArgs(char**, char**, int, char*[]);
+
+// Functions used only in args.c
+void errorAtArgs(char*);
 
 #endif
