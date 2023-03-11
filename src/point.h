@@ -1,11 +1,20 @@
 #ifndef POINT_H
-#define POINT_h
+#define POINT_H
+
+typedef int Coordinate;
 
 typedef struct {
-    int x, y;  // Coordinates
+    Coordinate x, y;
 } Point;
 
-void getPointsFromInput(char*, Point*[], int*, int*, int*);
+typedef struct {
+    int length;
+    Point* data;
+} PointArray;
+
+PointArray createPointArray(int length);
+void getPointsFromInput(PointArray*, Coordinate*, Coordinate*, char*);
 void sortPointsByY(Point[], int);
+int validPoint(Point, Point, Coordinate, Coordinate);
 
 #endif

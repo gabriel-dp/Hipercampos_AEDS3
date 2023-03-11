@@ -3,8 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-Point* createPointsArray(int length) {
-    Point* newArray = (Point*)(malloc(length * sizeof(Point)));
+PointArray createPointArray(int length) {
+    PointArray newArray;
+    newArray.data = (Point*)(malloc(length * sizeof(Point)));
+    newArray.length = length;
     return newArray;
 }
 
@@ -13,21 +15,24 @@ void inputError(char* message) {
     exit(EXIT_FAILURE);
 }
 
-void getPointsFromInput(char* path, Point* points[], int* totalPoints, int* xa, int* xb) {
+void getPointsFromInput(PointArray* points, Coordinate* xa, Coordinate* xb, char* path) {
     FILE* file = fopen(path, "r");
     if (file == NULL) inputError("Cannot read file");
 
-    fscanf(file, "%d %d %d", totalPoints, xa, xb);
+    int length;
+    fscanf(file, "%d %d %d", &length, xa, xb);
 
-    *points = createPointsArray(*totalPoints);
+    *points = createPointArray(length);
 
-    for (int i = 0; i < *totalPoints; i++) {
+    for (int i = 0; i < points->length; i++) {
         Point newPoint;
         if (fscanf(file, "%d %d", &newPoint.x, &newPoint.y) != 2) {
             inputError("Missing points");
         }
-        (*points)[i] = newPoint;
+        (*points).data[i] = newPoint;
     }
+
+    sortPointsByY(points->data, points->length);
 }
 
 // Selection sort algorythm (efficient to few elements)
@@ -46,4 +51,8 @@ void sortPointsByY(Point points[], int length) {
             points[i] = aux;
         }
     }
+}
+
+int validPoint(Point p, Point c, Coordinate xa, Coordinate xb) {
+    return 1;
 }

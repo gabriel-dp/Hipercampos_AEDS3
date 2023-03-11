@@ -2,20 +2,26 @@
 
 #include "args.h"
 #include "point.h"
+#include "sequence.h"
 
 int main(int argc, char* argv[]) {
     char *inputPath, *outputPath;
     getArgs(&inputPath, &outputPath, argc, argv);
 
-    int totalPoints, xa, xb;
-    Point* points = NULL;
-    getPointsFromInput(inputPath, &points, &totalPoints, &xa, &xb);
-    sortPointsByY(points, totalPoints);
+    PointArray points;
+    Coordinate xa, xb;
+    getPointsFromInput(&points, &xa, &xb, inputPath);
 
-    printf("|%d|%d|%d|\n", totalPoints, xa, xb);
-    for (int i = 0; i < totalPoints; i++) {
-        printf("|%d|%d|\n", points[i].x, points[i].y);
-    }
+    PointArray longestPath = getLongestPath(points, xa, xb);
+
+    printf("|MAIOR TAMANHO: %d|\n", longestPath.length);
 
     return 0;
 }
+
+/*
+printf("|%d|%d|%d|\n", points.length, xa, xb);
+for (int i = 0; i < points.length; i++) {
+    printf("|%d|%d|\n", points.data[i].x, points.data[i].y);
+}
+*/
