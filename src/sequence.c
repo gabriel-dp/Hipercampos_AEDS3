@@ -1,4 +1,4 @@
-#include "point.h"
+#include "sequence.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,24 +7,6 @@
 int validPoint(Point p, Point c, Coordinate xa, Coordinate xb) {
     // Davi
     return 1;
-}
-
-// Selection sort algorythm (efficient to few elements)
-void sortSequenceByY(Sequence sequence) {
-    int min;
-    for (int i = 0; i < sequence.length; i++) {
-        min = i;
-        for (int j = i + 1; j < sequence.length; j++) {
-            if (sequence.data[j].y < sequence.data[min].y) {
-                min = j;
-            }
-        }
-        if (min != i) {
-            Point aux = sequence.data[min];
-            sequence.data[min] = sequence.data[i];
-            sequence.data[i] = aux;
-        }
-    }
 }
 
 Sequence createSequence(int length) {
@@ -61,6 +43,24 @@ void printSequence(Sequence sequence) {
     printf("|\n");
 }
 
+// Selection sort algorythm (efficient to few elements)
+void sortSequenceByY(Sequence sequence) {
+    int min;
+    for (int i = 0; i < sequence.length; i++) {
+        min = i;
+        for (int j = i + 1; j < sequence.length; j++) {
+            if (sequence.data[j].y < sequence.data[min].y) {
+                min = j;
+            }
+        }
+        if (min != i) {
+            Point aux = sequence.data[min];
+            sequence.data[min] = sequence.data[i];
+            sequence.data[i] = aux;
+        }
+    }
+}
+
 void searchSequences(int index, Point points[], Sequence* auxSequence, Sequence* longestPath, Coordinate xa, Coordinate xb) {
     int originalLength = auxSequence->length;
 
@@ -79,7 +79,7 @@ void searchSequences(int index, Point points[], Sequence* auxSequence, Sequence*
 
 Sequence getLongestPath(Sequence points, Coordinate xa, Coordinate xb) {
     Sequence longestPath = createSequence(0);
-    Sequence auxSequence = createSequence(0);  // auxSequence is automatically freed due restoreSequence()
+    Sequence auxSequence = createSequence(0);  // auxSequence is automatically freed due to restoreSequence()
     searchSequences(points.length - 1, points.data, &auxSequence, &longestPath, xa, xb);
 
     return longestPath;
