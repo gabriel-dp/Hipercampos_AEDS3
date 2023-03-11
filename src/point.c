@@ -32,14 +32,18 @@ void getPointsFromInput(char* path, Point* points[], int* totalPoints, int* xa, 
 
 // Selection sort algorythm (efficient to few elements)
 void sortPointsByY(Point points[], int length) {
-    Point aux;
+    int min;
     for (int i = 0; i < length; i++) {
-        for (int j = i; j < length; j++) {
-            if (points[i].y > points[j].y) {
-                aux = points[j];
-                points[j] = points[i];
-                points[i] = aux;
+        min = i;
+        for (int j = i + 1; j < length; j++) {
+            if (points[j].y < points[min].y) {
+                min = j;
             }
+        }
+        if (min != i) {
+            Point aux = points[min];
+            points[min] = points[i];
+            points[i] = aux;
         }
     }
 }
