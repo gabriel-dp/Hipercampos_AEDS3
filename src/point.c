@@ -3,56 +3,84 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-PointArray createPointArray(int length) {
-    PointArray newArray;
+// Function to valid a point position based on another
+int validPoint(Point p, Point c, Coordinate xa, Coordinate xb) {
+    // Davi
+    return 1;
+}
+
+// Selection sort algorythm (efficient to few elements)
+void sortSequenceByY(Sequence sequence) {
+    int min;
+    for (int i = 0; i < sequence.length; i++) {
+        min = i;
+        for (int j = i + 1; j < sequence.length; j++) {
+            if (sequence.data[j].y < sequence.data[min].y) {
+                min = j;
+            }
+        }
+        if (min != i) {
+            Point aux = sequence.data[min];
+            sequence.data[min] = sequence.data[i];
+            sequence.data[i] = aux;
+        }
+    }
+}
+
+Sequence createSequence(int length) {
+    Sequence newArray;
     newArray.data = (Point*)(malloc(length * sizeof(Point)));
     newArray.length = length;
     return newArray;
 }
 
-void inputError(char* message) {
-    printf("INPUT ERROR - %s\n", message);
-    exit(EXIT_FAILURE);
+void addPointToSequence(Sequence* sequence, Point point) {
+    sequence->data = realloc(sequence->data, (sequence->length + 1) * sizeof(Point));
+    sequence->data[sequence->length] = point;
+    sequence->length++;
 }
 
-void getPointsFromInput(PointArray* points, Coordinate* xa, Coordinate* xb, char* path) {
-    FILE* file = fopen(path, "r");
-    if (file == NULL) inputError("Cannot read file");
+void restoreSequence(Sequence* sequence, int originalLength) {
+    sequence->data = realloc(sequence->data, originalLength * sizeof(Point));
+    sequence->length = originalLength;
+}
 
-    int length;
-    fscanf(file, "%d %d %d", &length, xa, xb);
+void copySequence(Sequence source, Sequence* copy) {
+    free(copy->data);  // deallocates previous data array
 
-    *points = createPointArray(length);
-
-    for (int i = 0; i < points->length; i++) {
-        Point newPoint;
-        if (fscanf(file, "%d %d", &newPoint.x, &newPoint.y) != 2) {
-            inputError("Missing points");
-        }
-        (*points).data[i] = newPoint;
+    *copy = createSequence(source.length);
+    for (int i = 0; i < copy->length; i++) {
+        copy->data[i] = source.data[i];
     }
-
-    sortPointsByY(points->data, points->length);
 }
 
-// Selection sort algorythm (efficient to few elements)
-void sortPointsByY(Point points[], int length) {
-    int min;
-    for (int i = 0; i < length; i++) {
-        min = i;
-        for (int j = i + 1; j < length; j++) {
-            if (points[j].y < points[min].y) {
-                min = j;
+void printSequence(Sequence sequence) {
+    for (int i = 0; i < sequence.length; i++) {
+        printf("|(%d, %d)", sequence.data[i].x, sequence.data[i].y);
+    }
+    printf("|\n");
+}
+
+void searchSequences(int index, Point points[], Sequence* auxSequence, Sequence* longestPath, Coordinate xa, Coordinate xb) {
+    int originalLength = auxSequence->length;
+
+    for (int i = index; i >= 0; i--) {
+        if (auxSequence->length == 0 || validPoint(points[i], auxSequence->data[auxSequence->length - 1], xa, xb)) {
+            addPointToSequence(auxSequence, points[i]);
+            // printSequence(*auxSequence);
+            if (auxSequence->length > longestPath->length) {
+                copySequence(*auxSequence, longestPath);
             }
-        }
-        if (min != i) {
-            Point aux = points[min];
-            points[min] = points[i];
-            points[i] = aux;
+            searchSequences(i - 1, points, auxSequence, longestPath, xa, xb);
+            restoreSequence(auxSequence, originalLength);
         }
     }
 }
 
-int validPoint(Point p, Point c, Coordinate xa, Coordinate xb) {
-    return 1;
+Sequence getLongestPath(Sequence points, Coordinate xa, Coordinate xb) {
+    Sequence longestPath = createSequence(0);
+    Sequence auxSequence = createSequence(0);  // auxSequence is automatically freed due restoreSequence()
+    searchSequences(points.length - 1, points.data, &auxSequence, &longestPath, xa, xb);
+
+    return longestPath;
 }

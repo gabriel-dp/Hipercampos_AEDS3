@@ -10,11 +10,14 @@ typedef struct {
 typedef struct {
     int length;
     Point* data;
-} PointArray;
+} Sequence;
 
-PointArray createPointArray(int length);
-void getPointsFromInput(PointArray*, Coordinate*, Coordinate*, char*);
-void sortPointsByY(Point[], int);
-int validPoint(Point, Point, Coordinate, Coordinate);
+// Functions used in main.c
+void printSequence(Sequence);
+void sortSequenceByY(Sequence);
+Sequence getLongestPath(Sequence, Coordinate, Coordinate);
+
+// Functions used in files.c
+Sequence createSequence(int length);
 
 #endif
