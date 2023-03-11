@@ -1,4 +1,4 @@
-#include "sequence.h"
+#include "../include/sequence.h"
 
 #include <stdio.h>
 #include <stdlib.h>

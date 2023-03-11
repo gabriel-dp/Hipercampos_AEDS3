@@ -1,8 +1,8 @@
 #include <stdio.h>
 
-#include "args.h"
-#include "pointio.h"
-#include "sequence.h"
+#include "../include/args.h"
+#include "../include/pointio.h"
+#include "../include/sequence.h"
 
 int main(int argc, char* argv[]) {
     char *inputPath, *outputPath;

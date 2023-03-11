@@ -1,4 +1,4 @@
-#include "pointio.h"
+#include "../include/pointio.h"
 
 #include <stdio.h>
 #include <stdlib.h>
