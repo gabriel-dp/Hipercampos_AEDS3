@@ -20,10 +20,8 @@ int validPoint(Point p, Point c, Coordinate xa, Coordinate xb) {
  *      Reallocates space for data based on the given length N, keeping the first N elements and removing the others
  *  - Print
  *      Print each point coordinates from a sequence
- *  - Create copy
+ *  - Copy
  *      Creates a new Sequence of the same length and copies point-by-point from the original to the new Sequence data
- *  - Sort by Y
- *      Selection sort algorythm (efficient to few elements)
  */
 
 Sequence createSequence(int length) {
