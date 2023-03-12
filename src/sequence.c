@@ -9,6 +9,23 @@ int validPoint(Point p, Point c, Coordinate xa, Coordinate xb) {
     return 1;
 }
 
+/*
+ *  ____BASIC SEQUENCE OPERATIONS____
+ *
+ *  - Create new
+ *      Creates a new Sequence and allocates space for the data based on the given length
+ *  - Add point
+ *      Reallocates the Sequence space to length + 1 and then stores the new point in that space
+ *  - Restore
+ *      Reallocates space for data based on the given length N, keeping the first N elements and removing the others
+ *  - Print
+ *      Print each point coordinates from a sequence
+ *  - Create copy
+ *      Creates a new Sequence of the same length and copies point-by-point from the original to the new Sequence data
+ *  - Sort by Y
+ *      Selection sort algorythm (efficient to few elements)
+ */
+
 Sequence createSequence(int length) {
     Sequence newArray;
     newArray.data = (Point*)(malloc(length * sizeof(Point)));
@@ -27,6 +44,13 @@ void restoreSequence(Sequence* sequence, int length) {
     sequence->length = length;
 }
 
+void printSequence(Sequence sequence) {
+    for (int i = 0; i < sequence.length; i++) {
+        printf("|(%d, %d)", sequence.data[i].x, sequence.data[i].y);
+    }
+    printf("|\n");
+}
+
 void copySequence(Sequence source, Sequence* copy) {
     free(copy->data);  // deallocates previous data array
 
@@ -36,14 +60,17 @@ void copySequence(Sequence source, Sequence* copy) {
     }
 }
 
-void printSequence(Sequence sequence) {
-    for (int i = 0; i < sequence.length; i++) {
-        printf("|(%d, %d)", sequence.data[i].x, sequence.data[i].y);
-    }
-    printf("|\n");
-}
+/*
+ *  ____COMPLEX SEQUENCE OPERATIONS____
+ *
+ *  - Sort by Y
+ *      Selection sort algorythm (efficient to few elements)
+ *  - Search
+ *      Recursive function to search for the longest sequence
+ *  - Get longest path
+ *      Responsible for calling the function to search sequences and returning the longest one
+ */
 
-// Selection sort algorythm (efficient to few elements)
 void sortSequenceByY(Sequence sequence) {
     int min;
     for (int i = 0; i < sequence.length; i++) {
@@ -98,7 +125,6 @@ Sequence getLongestPath(Sequence sequence, Coordinate xa, Coordinate xb) {
     // Sorted elements are better readable
     sortSequenceByY(sequence);
 
-    // Recursive function to search for the longest sequence
     searchSequences(sequence.length - 1, sequence.data, &auxSequence, &longestPath, xa, xb);
 
     return longestPath;
