@@ -11,7 +11,6 @@ int main(int argc, char* argv[]) {
     Coordinate xa, xb;
     Sequence inputPoints = getPointsInput(inputPath, &xa, &xb);
 
-    sortSequenceByY(inputPoints);
     Sequence longestPath = getLongestPath(inputPoints, xa, xb);
 
     printSequence(longestPath);

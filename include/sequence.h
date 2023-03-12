@@ -14,7 +14,6 @@ typedef struct {
 
 // Functions used in main.c
 void printSequence(Sequence);
-void sortSequenceByY(Sequence);
 Sequence getLongestPath(Sequence, Coordinate, Coordinate);
 
 // Functions used in pointio.c
@@ -25,6 +24,7 @@ int validPoint(Point, Point, Coordinate, Coordinate);
 void addPointToSequence(Sequence*, Point);
 void restoreSequence(Sequence*, int);
 void copySequence(Sequence, Sequence*);
+void sortSequenceByY(Sequence);
 void searchSequences(int, Point[], Sequence*, Sequence*, Coordinate, Coordinate);
 
 #endif

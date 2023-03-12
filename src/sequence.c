@@ -77,10 +77,18 @@ void searchSequences(int index, Point points[], Sequence* auxSequence, Sequence*
     }
 }
 
-Sequence getLongestPath(Sequence points, Coordinate xa, Coordinate xb) {
+Sequence getLongestPath(Sequence sequence, Coordinate xa, Coordinate xb) {
+    // auxSequence is automatically freed due to restoreSequence() that runs realloc() with size 0
+    Sequence auxSequence = createSequence(0);
+
+    // longestPath will receive auxSequence points every time another sequence has a longest length
     Sequence longestPath = createSequence(0);
-    Sequence auxSequence = createSequence(0);  // auxSequence is automatically freed due to restoreSequence()
-    searchSequences(points.length - 1, points.data, &auxSequence, &longestPath, xa, xb);
+
+    // Sorted elements are better readable
+    sortSequenceByY(sequence);
+
+    // Recursive function to search for the longest sequence
+    searchSequences(sequence.length - 1, sequence.data, &auxSequence, &longestPath, xa, xb);
 
     return longestPath;
 }
