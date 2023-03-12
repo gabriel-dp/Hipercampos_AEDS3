@@ -22,9 +22,9 @@ void addPointToSequence(Sequence* sequence, Point point) {
     sequence->length++;
 }
 
-void restoreSequence(Sequence* sequence, int originalLength) {
-    sequence->data = realloc(sequence->data, originalLength * sizeof(Point));
-    sequence->length = originalLength;
+void restoreSequence(Sequence* sequence, int length) {
+    sequence->data = realloc(sequence->data, length * sizeof(Point));
+    sequence->length = length;
 }
 
 void copySequence(Sequence source, Sequence* copy) {
@@ -61,18 +61,29 @@ void sortSequenceByY(Sequence sequence) {
     }
 }
 
-void searchSequences(int index, Point points[], Sequence* auxSequence, Sequence* longestPath, Coordinate xa, Coordinate xb) {
-    int originalLength = auxSequence->length;
+void searchSequences(int iterationIndex, Point points[], Sequence* activeSequence, Sequence* longestPath, Coordinate xa, Coordinate xb) {
+    int previousLength = activeSequence->length;
 
-    for (int i = index; i >= 0; i--) {
-        if (auxSequence->length == 0 || validPoint(points[i], auxSequence->data[auxSequence->length - 1], xa, xb)) {
-            addPointToSequence(auxSequence, points[i]);
-            // printSequence(*auxSequence);
-            if (auxSequence->length > longestPath->length) {
-                copySequence(*auxSequence, longestPath);
+    for (int i = iterationIndex; i >= 0; i--) {
+        // Break loop if the longest sequence length is greater or equal to all the next possible sequences
+        if (longestPath->length >= activeSequence->length + (i + 1)) {
+            break;
+        }
+
+        // Add a new point to the active sequence if it is empty or the point is valid
+        if (activeSequence->length == 0 || validPoint(points[i], activeSequence->data[activeSequence->length - 1], xa, xb)) {
+            addPointToSequence(activeSequence, points[i]);
+
+            // The active sequence will be the longest sequence if its length is greater than the previous longest
+            if (activeSequence->length > longestPath->length) {
+                copySequence(*activeSequence, longestPath);
             }
-            searchSequences(i - 1, points, auxSequence, longestPath, xa, xb);
-            restoreSequence(auxSequence, originalLength);
+
+            // Search for sequences in the i-1 remaining points
+            searchSequences(i - 1, points, activeSequence, longestPath, xa, xb);
+
+            // Restore activeSequence to the initial state before the iteration
+            restoreSequence(activeSequence, previousLength);
         }
     }
 }
@@ -81,7 +92,7 @@ Sequence getLongestPath(Sequence sequence, Coordinate xa, Coordinate xb) {
     // auxSequence is automatically freed due to restoreSequence() that runs realloc() with size 0
     Sequence auxSequence = createSequence(0);
 
-    // longestPath will receive auxSequence points every time another sequence has a longest length
+    // longestPath will receive auxSequence data every time a sequence has a longest length
     Sequence longestPath = createSequence(0);
 
     // Sorted elements are better readable
