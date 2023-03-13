@@ -3,10 +3,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Function to valid a point position based on another
+/*
+ *  ____POINT VERIFICATIONS____
+ *  - Relative Position
+ *      Compare a point to an edge, returns a positive value if on the left or negative if on the right
+ *  - Valid Point
+ *      Returns true if a point is inside a triangle
+ */
+
+int relativePosition(Point p, Point c, Point anchor) {
+    Vector edge, aux;
+    edge.i = c.x - anchor.x;
+    edge.j = c.y - anchor.y;
+    aux.i = p.x - anchor.x;
+    aux.j = p.y - anchor.y;
+
+    int crossProduct = edge.i * aux.j - edge.j * aux.i;
+
+    return crossProduct;
+}
+
 int validPoint(Point p, Point c, Point a, Point b) {
-    // Davi
-    return 1;
+    int leftPosition = relativePosition(p, c, a);
+    int rightPosition = relativePosition(p, c, b);
+
+    return (leftPosition < 0 && rightPosition > 0);
 }
 
 /*
@@ -114,14 +135,16 @@ void searchSequences(int iterationIndex, Point points[], Sequence* activeSequenc
 }
 
 Sequence getLongestPath(Sequence sequence, Point a, Point b) {
-    // auxSequence is automatically freed due to restoreSequence() that runs realloc() with size 0
+    // Create a sorted copy of the original sequence
+    Sequence sortedSequence = createSequence(0);
+    copySequence(sequence, &sortedSequence);
+    sortSequenceByY(sequence);
+
+    // Create an auxiliar sequence that is automatically deallocated due to restoreSequence()
     Sequence auxSequence = createSequence(0);
 
     // longestPath will receive auxSequence data every time a sequence has a longest length
     Sequence longestPath = createSequence(0);
-
-    // Sorted elements are better readable
-    sortSequenceByY(sequence);
 
     searchSequences(sequence.length - 1, sequence.data, &auxSequence, &longestPath, a, b);
 

@@ -12,6 +12,10 @@ typedef struct {
     Point* data;
 } Sequence;
 
+typedef struct {
+    Coordinate i, j;
+} Vector;
+
 // Functions used in main.c
 void printSequence(Sequence);
 Sequence getLongestPath(Sequence, Point, Point);
@@ -20,6 +24,7 @@ Sequence getLongestPath(Sequence, Point, Point);
 Sequence createSequence(int length);
 
 // Functions used only inside sequence.c
+int relativePosition(Point, Point, Point);
 int validPoint(Point, Point, Point, Point);
 void addPointToSequence(Sequence*, Point);
 void restoreSequence(Sequence*, int);
