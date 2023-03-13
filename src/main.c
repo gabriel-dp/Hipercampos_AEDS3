@@ -8,12 +8,12 @@ int main(int argc, char* argv[]) {
     char *inputPath, *outputPath;
     getArgs(&inputPath, &outputPath, argc, argv);
 
-    Coordinate xa, xb;
-    Sequence inputPoints = getPointsInput(inputPath, &xa, &xb);
+    Point a, b;
+    Sequence inputPoints = getPointsInput(inputPath, &a, &b);
 
-    Sequence longestPath = getLongestPath(inputPoints, xa, xb);
-
+    Sequence longestPath = getLongestPath(inputPoints, a, b);
     printSequence(longestPath);
+
     saveLongestLengthOutput(outputPath, longestPath.length);
 
     return 0;

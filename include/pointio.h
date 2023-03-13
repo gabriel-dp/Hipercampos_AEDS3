@@ -4,7 +4,7 @@
 #include "sequence.h"
 
 // Functions used in main.c
-Sequence getPointsInput(char*, Coordinate*, Coordinate*);
+Sequence getPointsInput(char*, Point*, Point*);
 void saveLongestLengthOutput(char*, int);
 
 // Functions used only in pointio.c

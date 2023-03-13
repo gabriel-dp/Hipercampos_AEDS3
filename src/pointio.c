@@ -10,12 +10,17 @@ void throwError(char* type, char* message) {
     exit(EXIT_FAILURE);
 }
 
-Sequence getPointsInput(char* inputPath, Coordinate* xa, Coordinate* xb) {
+Sequence getPointsInput(char* inputPath, Point* a, Point* b) {
     FILE* inputFile = fopen(inputPath, "r");
     if (inputFile == NULL) throwError("INPUT", "Cannot read file");
 
+    // First line contains the number of points and the X coordinate of A and B
     int length;
-    fscanf(inputFile, "%d %d %d", &length, xa, xb);
+    fscanf(inputFile, "%d %d %d", &length, &(a->x), &(b->x));
+
+    // Y coordinate of A and B is locked at 0
+    a->y = 0;
+    b->y = 0;
 
     Sequence sequence = createSequence(length);
 
