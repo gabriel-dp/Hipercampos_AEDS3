@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 // Function to valid a point position based on another
-int validPoint(Point p, Point c, Coordinate xa, Coordinate xb) {
+int validPoint(Point p, Point c, Point a, Point b) {
     // Davi
     return 1;
 }
@@ -86,7 +86,7 @@ void sortSequenceByY(Sequence sequence) {
     }
 }
 
-void searchSequences(int iterationIndex, Point points[], Sequence* activeSequence, Sequence* longestPath, Coordinate xa, Coordinate xb) {
+void searchSequences(int iterationIndex, Point points[], Sequence* activeSequence, Sequence* longestPath, Point a, Point b) {
     int previousLength = activeSequence->length;
 
     for (int i = iterationIndex; i >= 0; i--) {
@@ -96,7 +96,7 @@ void searchSequences(int iterationIndex, Point points[], Sequence* activeSequenc
         }
 
         // Add a new point to the active sequence if it is empty or the point is valid
-        if (activeSequence->length == 0 || validPoint(points[i], activeSequence->data[activeSequence->length - 1], xa, xb)) {
+        if (activeSequence->length == 0 || validPoint(points[i], activeSequence->data[activeSequence->length - 1], a, b)) {
             addPointToSequence(activeSequence, points[i]);
 
             // The active sequence will be the longest sequence if its length is greater than the previous longest
@@ -105,7 +105,7 @@ void searchSequences(int iterationIndex, Point points[], Sequence* activeSequenc
             }
 
             // Search for sequences in the i-1 remaining points
-            searchSequences(i - 1, points, activeSequence, longestPath, xa, xb);
+            searchSequences(i - 1, points, activeSequence, longestPath, a, b);
 
             // Restore activeSequence to the initial state before the iteration
             restoreSequence(activeSequence, previousLength);
@@ -113,7 +113,7 @@ void searchSequences(int iterationIndex, Point points[], Sequence* activeSequenc
     }
 }
 
-Sequence getLongestPath(Sequence sequence, Coordinate xa, Coordinate xb) {
+Sequence getLongestPath(Sequence sequence, Point a, Point b) {
     // auxSequence is automatically freed due to restoreSequence() that runs realloc() with size 0
     Sequence auxSequence = createSequence(0);
 
@@ -123,7 +123,7 @@ Sequence getLongestPath(Sequence sequence, Coordinate xa, Coordinate xb) {
     // Sorted elements are better readable
     sortSequenceByY(sequence);
 
-    searchSequences(sequence.length - 1, sequence.data, &auxSequence, &longestPath, xa, xb);
+    searchSequences(sequence.length - 1, sequence.data, &auxSequence, &longestPath, a, b);
 
     return longestPath;
 }
