@@ -22,12 +22,12 @@ Sequence getPointsInput(char* inputPath, Point* a, Point* b) {
     a->y = 0;
     b->y = 0;
 
+    // Creates sequence and fill it with the points from the input file
     Sequence sequence = createSequence(length);
-
     for (int i = 0; i < sequence.length; i++) {
         Point newPoint;
         if (fscanf(inputFile, "%d %d", &newPoint.x, &newPoint.y) != 2) {
-            throwError("INPUT", "Too few points in file");
+            throwError("INPUT", "Error reading the points");
         }
         sequence.data[i] = newPoint;
     }
