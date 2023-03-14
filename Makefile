@@ -12,7 +12,7 @@ BUILDDIR := build
 
 # Compiler flags
 CFLAGS := -Wall -I$(INCDIR)
-LDFLAGS := -lm
+LDFLAGS := -lm -lSDL2
 
 # %.o file names
 NAMES := $(notdir $(basename $(wildcard $(SRCDIR)/*.c)))
