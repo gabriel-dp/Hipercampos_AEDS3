@@ -6,20 +6,24 @@
 
 #include "../include/sequence.h"
 
+// Adjust an coordinate position due to plot and graph sizes difference
 int adjust(Coordinate coord, int graphSize) {
     const float adjust = PLOT_SIZE / graphSize;
     return (int)coord * adjust;
 }
 
+// Draw a point with some adjusts
 void drawPoint(Point p, SDL_Renderer* renderer, int graphSize) {
     SDL_RenderDrawPoint(renderer, adjust(p.x, graphSize), adjust((graphSize - p.y), graphSize));
 }
 
+// Draw a line with some adjusts
 void drawLine(Point p, Point q, SDL_Renderer* renderer, int graphSize) {
     SDL_RenderDrawLine(renderer, adjust(p.x, graphSize), adjust((graphSize - p.y), graphSize), adjust(q.x, graphSize), adjust((graphSize - q.y), graphSize));
 }
 
-void plotGraph(Sequence allPoints, Point a, Point b, Sequence longestPath, int graphSize) {
+// Function to plot the graph of all points and the lines created from the longest path
+void plotGraph(Point a, Point b, Sequence* allPoints, Sequence* longestPath, int graphSize) {
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
@@ -38,14 +42,14 @@ void plotGraph(Sequence allPoints, Point a, Point b, Sequence longestPath, int g
     // Draw all points
     drawPoint(a, renderer, graphSize);
     drawPoint(b, renderer, graphSize);
-    for (int i = 0; i < allPoints.length; i++) {
-        drawPoint(allPoints.data[i], renderer, graphSize);
+    for (int i = 0; i < allPoints->length; i++) {
+        drawPoint(allPoints->data[i], renderer, graphSize);
     }
 
     // Draw lines between the valid points and the anchors
-    for (int i = 0; i < longestPath.length; i++) {
-        drawLine(longestPath.data[i], a, renderer, graphSize);
-        drawLine(longestPath.data[i], b, renderer, graphSize);
+    for (int i = 0; i < longestPath->length; i++) {
+        drawLine(longestPath->data[i], a, renderer, graphSize);
+        drawLine(longestPath->data[i], b, renderer, graphSize);
     }
 
     // Render to screen

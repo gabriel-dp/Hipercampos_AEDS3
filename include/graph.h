@@ -3,6 +3,6 @@
 
 #include "sequence.h"
 
-void plotGraph(Sequence, Point, Point, Sequence, int);
+void plotGraph(Point, Point, Sequence*, Sequence*, int);
 
 #endif
