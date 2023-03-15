@@ -34,6 +34,10 @@ int main(int argc, char* argv[]) {
     printf("\nStarted at: %lu.%lus\n", start.tv_sec, start.tv_usec);
     printf("Ended at: %lu.%lus\n", end.tv_sec, end.tv_usec);
 
+    long int totalSec = end.tv_sec - start.tv_sec;
+    long int totalUsec = end.tv_usec - start.tv_usec;
+
+    printf("\n%ld.%ldµs\n\n", totalSec * 1000000, totalUsec);
 
     return 0;
 }
