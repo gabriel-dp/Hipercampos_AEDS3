@@ -15,11 +15,12 @@ int relativePosition(Point p, Point c, Point anchor) {
     return crossProduct;
 }
 
-// Checks if the point P is inside to the triangle created from the points (A, B, C)
+// Checks if the point P is inside the triangle created from the points (A, B, C)
 int validPoint(Point p, Point c, Point a, Point b) {
     // Point must be on the right of the left edge and on the left of the right edge
     int leftPosition = relativePosition(p, c, a);
     int rightPosition = relativePosition(p, c, b);
+    int isInsideTriangle = (leftPosition < 0 && rightPosition > 0);
 
-    return (leftPosition < 0 && rightPosition > 0);
+    return isInsideTriangle;
 }
