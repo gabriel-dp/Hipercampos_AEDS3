@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 #include "../include/args.h"
 #include "../include/pointio.h"
 #include "../include/pointlib.h"
