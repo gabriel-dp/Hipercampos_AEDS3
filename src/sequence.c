@@ -26,6 +26,7 @@ void restoreSequence(Sequence* sequence, int length) {
 
 // Prints each point coordinates from a sequence
 void printSequence(Sequence* sequence) {
+    printf("Sequence length: %d\n", sequence->length);
     for (int i = 0; i < sequence->length; i++) {
         printf("|(%d, %d)", sequence->data[i].x, sequence->data[i].y);
     }
