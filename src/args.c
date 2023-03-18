@@ -11,20 +11,23 @@ void errorAtArgs(char* programPath) {
 }
 
 // User must enter the input and output paths in the command line
-void getArgs(char** inputPath, char** outputPath, int argc, char* argv[]) {
+void getArgs(char** inputPath, char** outputPath, char** resultsPath, int argc, char* argv[]) {
     // Initializes both paths with NULL value
     *inputPath = NULL;
     *outputPath = NULL;
 
     // Reads all data coming from command line
     int option;
-    while ((option = getopt(argc, argv, "i:o:")) != -1) {
+    while ((option = getopt(argc, argv, "i:o:r:")) != -1) {
         switch (option) {
             case 'i':
                 *inputPath = optarg;
                 break;
             case 'o':
                 *outputPath = optarg;
+                break;
+            case 'r':
+                *resultsPath = optarg;
                 break;
             default:
                 errorAtArgs(argv[0]);

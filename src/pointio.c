@@ -62,7 +62,7 @@ Sequence getPointsInput(char* inputPath, Point* a, Point* b) {
     return allPoints;
 }
 
-// The output is the number of points in the longest path
+// The output file saves the number of points in the longest path
 void saveLongestLengthOutput(char* outputPath, int value) {
     // Try to open the output file in write mode
     FILE* outputFile = fopen(outputPath, "w");
@@ -73,4 +73,17 @@ void saveLongestLengthOutput(char* outputPath, int value) {
 
     // Closes output file
     fclose(outputFile);
+}
+
+// The results file stores data from all code executions in a single file
+void saveResultsData(char* resultsPath, int totalPoints, int validPoints, long double elapsedTime) {
+    // Try to open the results file in append mode
+    FILE* resultsFile = fopen(resultsPath, "a");
+    if (resultsFile == NULL) throwError("RESULTS", "Cannot open file");
+
+    // Writes a new line with totalPoints + validPoints + elapsedTime
+    fprintf(resultsFile, "%d %d %Lf\n", totalPoints, validPoints, elapsedTime);
+
+    // Closes results file
+    fclose(resultsFile);
 }

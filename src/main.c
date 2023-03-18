@@ -6,8 +6,8 @@
 
 int main(int argc, char* argv[]) {
     // Receives the input and output paths from the command line
-    char *inputPath, *outputPath;
-    getArgs(&inputPath, &outputPath, argc, argv);
+    char *inputPath, *outputPath, *resultsPath;
+    getArgs(&inputPath, &outputPath, &resultsPath, argc, argv);
 
     // Creates A, B and all other points from the input file
     Point a, b;
@@ -26,6 +26,9 @@ int main(int argc, char* argv[]) {
     // Saves the longest path length to the output file
     saveLongestLengthOutput(outputPath, longestPath.length);
     printSequence(&longestPath);
+
+    // Saves results from each execution
+    saveResultsData(resultsPath, inputPoints.length, longestPath.length, endTime - startTime);
 
     // Deallocates longestPath sequence array
     restoreSequence(&longestPath, 0);
