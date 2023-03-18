@@ -4,9 +4,9 @@
 #include "pointlib.h"
 #include "sequence.h"
 
-void sortSequenceByY(Sequence);
+void sortSequenceArrayByY(SequenceArray*);
 void throwError(char*, char*);
-Sequence getPointsInput(char*, Point*, Point*);
+SequenceArray getPointsInput(char*, Point*, Point*);
 void saveLongestLengthOutput(char*, int);
 
 #endif

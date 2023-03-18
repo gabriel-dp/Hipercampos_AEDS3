@@ -6,19 +6,19 @@
 #include "../include/sequence.h"
 
 // Selection sort algorythm, great for few elements
-void sortSequenceByY(Sequence sequence) {
+void sortSequenceArrayByY(SequenceArray* sequence) {
     int min;
-    for (int i = 0; i < sequence.length; i++) {
+    for (int i = 0; i < sequence->length; i++) {
         min = i;
-        for (int j = i + 1; j < sequence.length; j++) {
-            if (sequence.data[j].y < sequence.data[min].y) {
+        for (int j = i + 1; j < sequence->length; j++) {
+            if (sequence->data[j].y < sequence->data[min].y) {
                 min = j;
             }
         }
         if (min != i) {
-            Point aux = sequence.data[min];
-            sequence.data[min] = sequence.data[i];
-            sequence.data[i] = aux;
+            Point aux = sequence->data[min];
+            sequence->data[min] = sequence->data[i];
+            sequence->data[i] = aux;
         }
     }
 }
@@ -30,7 +30,7 @@ void throwError(char* type, char* message) {
 }
 
 // The input file contains the number of points + Ax + Bx and all other points
-Sequence getPointsInput(char* inputPath, Point* a, Point* b) {
+SequenceArray getPointsInput(char* inputPath, Point* a, Point* b) {
     // Try to open the input file in read mode
     FILE* inputFile = fopen(inputPath, "r");
     if (inputFile == NULL) throwError("INPUT", "Cannot read file");
@@ -44,7 +44,7 @@ Sequence getPointsInput(char* inputPath, Point* a, Point* b) {
     b->y = 0;
 
     // Creates a sequence and fill it with the points from the input file
-    Sequence allPoints = createSequence(length);
+    SequenceArray allPoints = createSequenceArray(length);
     for (int i = 0; i < allPoints.length; i++) {
         Point newPoint;
         if (fscanf(inputFile, "%d %d", &newPoint.x, &newPoint.y) != 2) {
@@ -57,7 +57,7 @@ Sequence getPointsInput(char* inputPath, Point* a, Point* b) {
     fclose(inputFile);
 
     // Sorts all points in ascending order
-    sortSequenceByY(allPoints);
+    sortSequenceArrayByY(&allPoints);
 
     return allPoints;
 }

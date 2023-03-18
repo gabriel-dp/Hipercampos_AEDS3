@@ -3,17 +3,29 @@
 
 #include "pointlib.h"
 
-typedef struct {
-    int length;
-    Point* data;
-} Sequence;
+typedef struct element_t {
+    Point point;
+    struct element_t *next, *previous;
+} Element;
 
-Sequence createSequence(int length);
-void addPointToSequence(Sequence*, Point);
-void restoreSequence(Sequence*, int);
-void printSequence(Sequence*);
-void copySequence(Sequence*, Sequence*);
-void searchSequences(int, Point[], Sequence*, Sequence*, Point, Point);
-Sequence getLongestPath(Sequence*, Point, Point);
+typedef struct {
+    Element *first, *last;
+    int length;
+} SequenceList;
+
+typedef struct {
+    Point *data;
+    int length;
+} SequenceArray;
+
+SequenceList createSequenceList();
+SequenceArray createSequenceArray(int);
+void addSequenceList(SequenceList *, Point);
+void popSequenceList(SequenceList *);
+void printSequenceList(SequenceList *);
+void printSequenceArray(SequenceArray *);
+void copySequenceListToArray(SequenceList *, SequenceArray *);
+void searchSequences(int, Point[], SequenceList *, SequenceArray *, Point, Point);
+SequenceArray getLongestPath(SequenceArray *, Point, Point);
 
 #endif
