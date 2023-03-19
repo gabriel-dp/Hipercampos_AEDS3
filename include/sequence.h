@@ -11,21 +11,15 @@ typedef struct element_t {
 typedef struct {
     Element *first, *last;
     int length;
-} SequenceList;
+} Sequence;
 
-typedef struct {
-    Point *data;
-    int length;
-} SequenceArray;
-
-SequenceList createSequenceList();
-SequenceArray createSequenceArray(int);
-void addSequenceList(SequenceList *, Point);
-void popSequenceList(SequenceList *);
-void printSequenceList(SequenceList *);
-void printSequenceArray(SequenceArray *);
-void copySequenceListToArray(SequenceList *, SequenceArray *);
-void searchSequences(int, Point[], SequenceList *, SequenceArray *, Point, Point);
-SequenceArray getLongestPath(SequenceArray *, Point, Point);
+Sequence createSequence();
+void addSequence(Sequence *, Point);
+void popSequence(Sequence *);
+void restoreSequence(Sequence *, int);
+void printSequence(Sequence *);
+void copySequenceToArray(Sequence *, PointsArray *);
+void searchSequences(int, Point[], Sequence *, PointsArray *, Point, Point);
+PointsArray getLongestPath(PointsArray *, Point, Point);
 
 #endif

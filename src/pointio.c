@@ -3,22 +3,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../include/sequence.h"
-
 // Selection sort algorythm, great for few elements
-void sortSequenceArrayByY(SequenceArray* sequence) {
+void sortPointsArrayByY(PointsArray* array) {
     int min;
-    for (int i = 0; i < sequence->length; i++) {
+    for (int i = 0; i < array->length; i++) {
         min = i;
-        for (int j = i + 1; j < sequence->length; j++) {
-            if (sequence->data[j].y < sequence->data[min].y) {
+        for (int j = i + 1; j < array->length; j++) {
+            if (array->data[j].y < array->data[min].y) {
                 min = j;
             }
         }
         if (min != i) {
-            Point aux = sequence->data[min];
-            sequence->data[min] = sequence->data[i];
-            sequence->data[i] = aux;
+            Point aux = array->data[min];
+            array->data[min] = array->data[i];
+            array->data[i] = aux;
         }
     }
 }
@@ -30,7 +28,7 @@ void throwError(char* type, char* message) {
 }
 
 // The input file contains the number of points + Ax + Bx and all other points
-SequenceArray getPointsInput(char* inputPath, Point* a, Point* b) {
+PointsArray getPointsInput(char* inputPath, Point* a, Point* b) {
     // Try to open the input file in read mode
     FILE* inputFile = fopen(inputPath, "r");
     if (inputFile == NULL) throwError("INPUT", "Cannot read file");
@@ -43,8 +41,8 @@ SequenceArray getPointsInput(char* inputPath, Point* a, Point* b) {
     a->y = 0;
     b->y = 0;
 
-    // Creates a sequence and fill it with the points from the input file
-    SequenceArray allPoints = createSequenceArray(length);
+    // Creates an array and fill it with the points from the input file
+    PointsArray allPoints = createPointsArray(length);
     for (int i = 0; i < allPoints.length; i++) {
         Point newPoint;
         if (fscanf(inputFile, "%d %d", &newPoint.x, &newPoint.y) != 2) {
@@ -57,7 +55,7 @@ SequenceArray getPointsInput(char* inputPath, Point* a, Point* b) {
     fclose(inputFile);
 
     // Sorts all points in ascending order
-    sortSequenceArrayByY(&allPoints);
+    sortPointsArrayByY(&allPoints);
 
     return allPoints;
 }

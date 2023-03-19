@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "../include/args.h"
 #include "../include/pointio.h"
 #include "../include/pointlib.h"
@@ -10,17 +12,17 @@ int main(int argc, char* argv[]) {
 
     // Creates A, B and all other points from the input file
     Point a, b;
-    SequenceArray inputPoints = getPointsInput(inputPath, &a, &b);
+    PointsArray inputPoints = getPointsInput(inputPath, &a, &b);
 
     // Gets the longest path between all points
-    SequenceArray longestPath = getLongestPath(&inputPoints, a, b);
-    printSequenceArray(&longestPath);
+    PointsArray longestPath = getLongestPath(&inputPoints, a, b);
+    printPointsArray(&longestPath);
 
     // Saves the longest path length to the output file
     saveLongestLengthOutput(outputPath, longestPath.length);
 
-    // Deallocates longestPath sequence array
-    // restoreSequence(&longestPath, 0);
+    // Deallocates longestPath data pointer
+    free(longestPath.data);
 
     return 0;
 }
