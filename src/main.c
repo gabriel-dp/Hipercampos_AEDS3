@@ -21,7 +21,8 @@ int main(int argc, char* argv[]) {
     // Saves the longest path length to the output file
     saveLongestLengthOutput(outputPath, longestPath.length);
 
-    // Deallocates longestPath data pointer
+    // Deallocates inputPoints and longestPath pointers
+    free(inputPoints.data);
     free(longestPath.data);
 
     return 0;

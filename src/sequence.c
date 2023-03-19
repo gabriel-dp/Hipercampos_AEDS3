@@ -30,7 +30,7 @@ void addSequence(Sequence* sequence, Point point) {
     sequence->length++;
 }
 
-// Delete the last element from a SequenceList
+// Delete the last element from a Sequence
 void popSequence(Sequence* sequence) {
     Element* deletedPoint = sequence->last;
     free(deletedPoint);
@@ -45,7 +45,7 @@ void popSequence(Sequence* sequence) {
     sequence->length--;
 }
 
-// Restore a SequenceList to a given length
+// Restore a Sequence to a given length
 void restoreSequence(Sequence* sequence, int length) {
     while (sequence->length > length) {
         popSequence(sequence);
@@ -65,7 +65,7 @@ void printSequence(Sequence* sequence) {
     printf("|\n");
 }
 
-// Creates a new Sequence of the same length and copies point-by-point from the original to the new Sequence data
+// Copies point-by-point from the source Sequence to the PointsArray copy
 void copySequenceToArray(Sequence* source, PointsArray* copy) {
     copy->data = realloc(copy->data, sizeof(Point) * source->length);
 
