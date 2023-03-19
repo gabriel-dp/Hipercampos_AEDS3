@@ -3,49 +3,86 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Creates a new Sequence and allocates space for the data based on the given length
-Sequence createSequence(int length) {
-    Sequence newArray;
-    newArray.data = (Point*)(malloc(length * sizeof(Point)));
-    newArray.length = length;
-    return newArray;
+// Creates a new empty Sequence
+Sequence createSequence() {
+    Sequence newSequence;
+    newSequence.first = NULL;
+    newSequence.last = NULL;
+    newSequence.length = 0;
+
+    return newSequence;
 }
 
-// Reallocates the Sequence space to length + 1 and then stores the new point in that space
-void addPointToSequence(Sequence* sequence, Point point) {
-    sequence->data = realloc(sequence->data, (sequence->length + 1) * sizeof(Point));
-    sequence->data[sequence->length] = point;
+// Add a new point to a Sequence
+void addSequence(Sequence* sequence, Point point) {
+    Element* newPoint = (Element*)malloc(sizeof(Element));
+    newPoint->point = point;
+    newPoint->previous = sequence->last;
+    newPoint->next = NULL;
+
+    if (sequence->length == 0) {
+        sequence->first = newPoint;
+    } else {
+        sequence->last->next = newPoint;
+    }
+    sequence->last = newPoint;
+
     sequence->length++;
 }
 
-// Reallocates space for data based on the given length N, keeping the first N elements and removing the others
-void restoreSequence(Sequence* sequence, int length) {
-    sequence->data = realloc(sequence->data, length * sizeof(Point));
-    sequence->length = length;
+// Delete the last element from a Sequence
+void popSequence(Sequence* sequence) {
+    Element* deletedPoint = sequence->last;
+    free(deletedPoint);
+
+    sequence->last = sequence->last->previous;
+    if (sequence->last == NULL) {
+        sequence->first = NULL;
+    } else {
+        sequence->last->next = NULL;
+    }
+
+    sequence->length--;
 }
 
-// Prints each point coordinates from a sequence
+// Restore a Sequence to a given length
+void restoreSequence(Sequence* sequence, int length) {
+    while (sequence->length > length) {
+        popSequence(sequence);
+    }
+}
+
+// Prints each point coordinates from a SequenceList
 void printSequence(Sequence* sequence) {
     printf("Sequence length: %d\n", sequence->length);
-    for (int i = 0; i < sequence->length; i++) {
-        printf("|(%d, %d)", sequence->data[i].x, sequence->data[i].y);
+    if (sequence->length < 1) return;
+
+    Element* actualPoint = sequence->first;
+    while (actualPoint != NULL) {
+        printf("|(%d,%d)", actualPoint->point.x, actualPoint->point.y);
+        actualPoint = actualPoint->next;
     }
     printf("|\n");
 }
 
-// Creates a new Sequence of the same length and copies point-by-point from the original to the new Sequence data
-void copySequence(Sequence* source, Sequence* copy) {
-    // Deallocates previous data array
-    free(copy->data);
+// Copies point-by-point from the source Sequence to the PointsArray copy
+void copySequenceToArray(Sequence* source, PointsArray* copy) {
+    copy->data = realloc(copy->data, sizeof(Point) * source->length);
 
-    *copy = createSequence(source->length);
-    for (int i = 0; i < copy->length; i++) {
-        copy->data[i] = source->data[i];
+    int index = 0;
+    Element* actualPoint = source->first;
+    while (actualPoint != NULL) {
+        copy->data[index] = actualPoint->point;
+
+        actualPoint = actualPoint->next;
+        index++;
     }
+
+    copy->length = source->length;
 }
 
 // Recursive function to search for the longest path
-void searchSequences(int iterationIndex, Point points[], Sequence* activeSequence, Sequence* longestPath, Point a, Point b) {
+void searchSequences(int iterationIndex, Point points[], Sequence* activeSequence, PointsArray* longestPath, Point a, Point b) {
     // Stores the initial state before the loop
     int previousLength = activeSequence->length;
 
@@ -56,12 +93,12 @@ void searchSequences(int iterationIndex, Point points[], Sequence* activeSequenc
         }
 
         // Adds a new point to the active sequence if it is empty or the point is valid
-        if (activeSequence->length == 0 || validPoint(points[i], activeSequence->data[activeSequence->length - 1], a, b)) {
-            addPointToSequence(activeSequence, points[i]);
+        if (activeSequence->length == 0 || validPoint(points[i], activeSequence->last->point, a, b)) {
+            addSequence(activeSequence, points[i]);
 
             // The active sequence will be the longest sequence if its length is greater than the previous longest
             if (activeSequence->length > longestPath->length) {
-                copySequence(activeSequence, longestPath);
+                copySequenceToArray(activeSequence, longestPath);
             }
 
             // Searches for sequences in the i-1 remaining points
@@ -74,12 +111,12 @@ void searchSequences(int iterationIndex, Point points[], Sequence* activeSequenc
 }
 
 // Call the function to search sequences and returns the one with the longest path
-Sequence getLongestPath(Sequence* sequence, Point a, Point b) {
+PointsArray getLongestPath(PointsArray* sequence, Point a, Point b) {
     // Creates an auxiliar sequence that is automatically deallocated
-    Sequence auxSequence = createSequence(0);
+    Sequence auxSequence = createSequence();
 
     // The longest path will receive the auxiliar sequence data every time that sequence has a greater length
-    Sequence longestPath = createSequence(0);
+    PointsArray longestPath = createPointsArray(0);
 
     // Searches for the longest sequence
     searchSequences(sequence->length - 1, sequence->data, &auxSequence, &longestPath, a, b);
