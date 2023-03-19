@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../include/sequence.h"
+#include "../include/pointlib.h"
 
 // Adjust an coordinate position due to plot and graph sizes difference
 int adjust(Coordinate coord, int graphSize) {
@@ -23,7 +23,7 @@ void drawLine(Point p, Point q, SDL_Renderer* renderer, int graphSize) {
 }
 
 // Function to plot the graph of all points and the lines created from the longest path
-void plotGraph(Point a, Point b, Sequence* allPoints, Sequence* longestPath, int graphSize) {
+void plotGraph(Point a, Point b, PointsArray* allPoints, PointsArray* longestPath, int graphSize) {
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         SDL_Log("Unable to initialize SDL: %s", SDL_GetError());

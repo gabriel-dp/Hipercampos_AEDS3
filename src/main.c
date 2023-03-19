@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <stdlib.h>
 
 #include "../include/args.h"
 #include "../include/graph.h"
@@ -14,21 +14,23 @@ int main(int argc, char* argv[]) {
 
     // Creates A, B and all other points from the input file
     Point a, b;
-    Sequence inputPoints = getPointsInput(inputPath, &a, &b);
+    PointsArray inputPoints = getPointsInput(inputPath, &a, &b);
 
     // Gets the longest path between all points
-    Sequence longestPath = getLongestPath(&inputPoints, a, b);
-    printSequence(&longestPath);
+    PointsArray longestPath = getLongestPath(&inputPoints, a, b);
+    printPointsArray(&longestPath);
 
     // Saves the longest path length to the output file
     saveLongestLengthOutput(outputPath, longestPath.length);
 
+    // Plots graph if user entered graphSize
     if (graphSize != 0) {
         plotGraph(a, b, &inputPoints, &longestPath, graphSize);
     }
 
-    // Deallocates longestPath sequence array
-    restoreSequence(&longestPath, 0);
+    // Deallocates inputPoints and longestPath pointers
+    free(inputPoints.data);
+    free(longestPath.data);
 
     return 0;
 }

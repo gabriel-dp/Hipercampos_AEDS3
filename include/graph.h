@@ -1,8 +1,8 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include "sequence.h"
+#include "pointlib.h"
 
-void plotGraph(Point, Point, Sequence*, Sequence*, int);
+void plotGraph(Point, Point, PointsArray*, PointsArray*, int);
 
 #endif
