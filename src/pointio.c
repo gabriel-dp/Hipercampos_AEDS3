@@ -81,7 +81,7 @@ void saveResultsData(char* resultsPath, int totalPoints, int validPoints, long d
 
     // Writes a new line with totalPoints + validPoints + elapsedTime
     fprintf(resultsFile, "%d %d %Lf\n", totalPoints, validPoints, elapsedTime);
-    printf("Results written in %s\n", resultsPath);
+    printf("Results written in '%s'\n", resultsPath);
 
     // Closes results file
     fclose(resultsFile);

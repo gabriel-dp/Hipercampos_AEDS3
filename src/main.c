@@ -30,7 +30,9 @@ int main(int argc, char* argv[]) {
     printPointsArray(&longestPath);
 
     // Saves results from each execution
-    saveResultsData(resultsPath, inputPoints.length, longestPath.length, endTime - startTime);
+    if (resultsPath != NULL) {
+        saveResultsData(resultsPath, inputPoints.length, longestPath.length, endTime - startTime);
+    }
 
     // Deallocates inputPoints and longestPath pointers
     free(inputPoints.data);

@@ -6,7 +6,7 @@
 
 // Function to stop the program in case of errors in the command line
 void errorAtArgs(char* programPath) {
-    printf("ARGS ERROR - Correct usage: '%s -i {inputPath} -o {outputPath}'\n", programPath);
+    printf("ARGS ERROR - Correct usage: '%s -i {inputPath} -o {outputPath} -r {optional_resultsPath}'\n", programPath);
     exit(EXIT_FAILURE);
 }
 
@@ -15,6 +15,7 @@ void getArgs(char** inputPath, char** outputPath, char** resultsPath, int argc, 
     // Initializes both paths with NULL value
     *inputPath = NULL;
     *outputPath = NULL;
+    *resultsPath = NULL;
 
     // Reads all data coming from command line
     int option;
