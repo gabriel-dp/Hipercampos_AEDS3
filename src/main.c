@@ -12,18 +12,16 @@ int main(int argc, char* argv[]) {
 
     // Creates A, B and all other points from the input file
     Point a, b;
-    PointsArray inputPoints = getPointsInput(inputPath, &a, &b);
+    Sequence inputPoints = getPointsInput(inputPath, &a, &b);
 
-    // Gets the longest path between all points
-    PointsArray longestPath = getLongestPath(&inputPoints, a, b);
-    printPointsArray(&longestPath);
+    // Gets the greatest path between all points
+    int greatestPathLength = getGreatestPathLength(&inputPoints, a, b);
 
-    // Saves the longest path length to the output file
-    saveLongestLengthOutput(outputPath, longestPath.length);
+    // Saves the greatest path length to the output file
+    saveGreatestPathLengthOutput(outputPath, greatestPathLength);
 
     // Deallocates inputPoints and longestPath pointers
     free(inputPoints.data);
-    free(longestPath.data);
 
     return 0;
 }

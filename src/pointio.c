@@ -4,19 +4,19 @@
 #include <stdlib.h>
 
 // Selection sort algorythm, great for few elements
-void sortPointsArrayByY(PointsArray* array) {
+void sortSequenceByY(Sequence* sequence) {
     int min;
-    for (int i = 0; i < array->length; i++) {
+    for (int i = 0; i < sequence->length; i++) {
         min = i;
-        for (int j = i + 1; j < array->length; j++) {
-            if (array->data[j].y < array->data[min].y) {
+        for (int j = i + 1; j < sequence->length; j++) {
+            if (sequence->data[j].point.y < sequence->data[min].point.y) {
                 min = j;
             }
         }
         if (min != i) {
-            Point aux = array->data[min];
-            array->data[min] = array->data[i];
-            array->data[i] = aux;
+            Point aux = sequence->data[min].point;
+            sequence->data[min].point = sequence->data[i].point;
+            sequence->data[i].point = aux;
         }
     }
 }
@@ -28,7 +28,7 @@ void throwError(char* type, char* message) {
 }
 
 // The input file contains the number of points + Ax + Bx and all other points
-PointsArray getPointsInput(char* inputPath, Point* a, Point* b) {
+Sequence getPointsInput(char* inputPath, Point* a, Point* b) {
     // Try to open the input file in read mode
     FILE* inputFile = fopen(inputPath, "r");
     if (inputFile == NULL) throwError("INPUT", "Cannot read file");
@@ -42,26 +42,26 @@ PointsArray getPointsInput(char* inputPath, Point* a, Point* b) {
     b->y = 0;
 
     // Creates an array and fill it with the points from the input file
-    PointsArray allPoints = createPointsArray(length);
-    for (int i = 0; i < allPoints.length; i++) {
+    Sequence allPoints = createSequence(length);
+    for (int i = 0; i < length; i++) {
         Point newPoint;
         if (fscanf(inputFile, "%d %d", &newPoint.x, &newPoint.y) != 2) {
             throwError("INPUT", "Error reading the points");
         }
-        allPoints.data[i] = newPoint;
+        addToSequence(&allPoints, newPoint);
     }
 
     // Closes input file
     fclose(inputFile);
 
     // Sorts all points in ascending order
-    sortPointsArrayByY(&allPoints);
+    sortSequenceByY(&allPoints);
 
     return allPoints;
 }
 
 // The output is the number of points in the longest path
-void saveLongestLengthOutput(char* outputPath, int value) {
+void saveGreatestPathLengthOutput(char* outputPath, int value) {
     // Try to open the output file in write mode
     FILE* outputFile = fopen(outputPath, "w");
     if (outputFile == NULL) throwError("OUTPUT", "Cannot write file");

@@ -3,26 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Creates a new empty PointsArray
-PointsArray createPointsArray(int length) {
-    PointsArray newArray;
-    newArray.data = (Point*)malloc(sizeof(Point) * length);
-    newArray.length = length;
-
-    return newArray;
-}
-
-// Prints each point coordinates from a PointsArray
-void printPointsArray(PointsArray* Array) {
-    printf("Array length: %d\n", Array->length);
-    if (Array->length < 1) return;
-
-    for (int i = 0; i < Array->length; i++) {
-        printf("|(%d,%d)", Array->data[i].x, Array->data[i].y);
-    }
-    printf("|\n");
-}
-
 // Compares a point to an vector, returns a positive value if on the left or negative if on the right
 int relativePosition(Point p, Point c, Point anchor) {
     // Creates the vectors starting from the anchor to points P and C
