@@ -36,17 +36,23 @@ void plotGraph(Point a, Point b, PointsArray* allPoints, PointsArray* longestPat
     // Create a renderer
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-    // Set render color to red
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    // Draw lines between all points and the anchors
+    SDL_SetRenderDrawColor(renderer, 10, 10, 10, 255);  // Dark gray
+    for (int i = 0; i < allPoints->length; i++) {
+        drawLine(allPoints->data[i], a, renderer, graphSize);
+        drawLine(allPoints->data[i], b, renderer, graphSize);
+    }
 
     // Draw all points
+    SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);  // Light gray
     drawPoint(a, renderer, graphSize);
     drawPoint(b, renderer, graphSize);
     for (int i = 0; i < allPoints->length; i++) {
         drawPoint(allPoints->data[i], renderer, graphSize);
     }
 
-    // Draw lines between the valid points and the anchors
+    // Draw lines between longestPath points and the anchors
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);  // Red
     for (int i = 0; i < longestPath->length; i++) {
         drawLine(longestPath->data[i], a, renderer, graphSize);
         drawLine(longestPath->data[i], b, renderer, graphSize);
