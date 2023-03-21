@@ -46,7 +46,7 @@ Sequence getLongestPath(Sequence* sequence, Point a, Point b) {
         connections[i] = 1;
 
         // Searches for the point j (below point i) that has more connections
-        int greatestSubLength = 0;
+        int greatestSubLength = 1;
         for (int j = i - 1; j >= 0; j--) {
             if (validPoint(sequence->points[j], sequence->points[i], a, b)) {
                 if (connections[j] > greatestSubLength) {
