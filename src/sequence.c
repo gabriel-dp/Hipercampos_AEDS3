@@ -36,7 +36,7 @@ void freeSequence(Sequence* sequence) {
 
 // Search sequences and returns the one with the longest path
 Sequence getLongestPath(Sequence* sequence, Point a, Point b) {
-    // Creates an temp array to store each point connections number
+    // Creates a temp array to store each point connections number
     Connection* connections = (Connection*)malloc(sequence->length * sizeof(Connection));
 
     // Initializes longestPath length and start index variables
@@ -68,8 +68,6 @@ Sequence getLongestPath(Sequence* sequence, Point a, Point b) {
             longestPathIndex = i;
         }
     }
-
-    printSequence(sequence);
 
     // Creates the sequence based on the connections previously created
     Sequence longestPath = createSequence(longestPathLength);
