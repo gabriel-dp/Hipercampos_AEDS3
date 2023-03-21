@@ -1,10 +1,10 @@
 #define PLOT_SIZE 500.0f  // 1:1 Aspect Ratio
 
+#include "../include/graph.h"
+
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-#include "../include/pointlib.h"
 
 // Adjust an coordinate position due to plot and graph sizes difference
 int adjust(Coordinate coord, int graphSize) {
@@ -23,7 +23,7 @@ void drawLine(Point p, Point q, SDL_Renderer* renderer, int graphSize) {
 }
 
 // Function to plot the graph of all points and the lines created from the longest path
-void plotGraph(Point a, Point b, PointsArray* allPoints, PointsArray* longestPath, int graphSize) {
+void plotGraph(Point a, Point b, Sequence* allPoints, Sequence* longestPath, int graphSize) {
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
@@ -39,8 +39,8 @@ void plotGraph(Point a, Point b, PointsArray* allPoints, PointsArray* longestPat
     // Draw lines between all points and the anchors
     SDL_SetRenderDrawColor(renderer, 10, 10, 10, 255);  // Dark gray
     for (int i = 0; i < allPoints->length; i++) {
-        drawLine(allPoints->data[i], a, renderer, graphSize);
-        drawLine(allPoints->data[i], b, renderer, graphSize);
+        drawLine(allPoints->points[i], a, renderer, graphSize);
+        drawLine(allPoints->points[i], b, renderer, graphSize);
     }
 
     // Draw all points
@@ -48,14 +48,14 @@ void plotGraph(Point a, Point b, PointsArray* allPoints, PointsArray* longestPat
     drawPoint(a, renderer, graphSize);
     drawPoint(b, renderer, graphSize);
     for (int i = 0; i < allPoints->length; i++) {
-        drawPoint(allPoints->data[i], renderer, graphSize);
+        drawPoint(allPoints->points[i], renderer, graphSize);
     }
 
     // Draw lines between longestPath points and the anchors
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);  // Red
     for (int i = 0; i < longestPath->length; i++) {
-        drawLine(longestPath->data[i], a, renderer, graphSize);
-        drawLine(longestPath->data[i], b, renderer, graphSize);
+        drawLine(longestPath->points[i], a, renderer, graphSize);
+        drawLine(longestPath->points[i], b, renderer, graphSize);
     }
 
     // Render to screen
