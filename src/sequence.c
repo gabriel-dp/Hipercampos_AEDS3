@@ -37,40 +37,46 @@ void freeSequence(Sequence* sequence) {
 // Search sequences and returns the one with the longest path
 Sequence getLongestPath(Sequence* sequence, Point a, Point b) {
     // Creates an temp array to store each point connections number
-    int* connections = (int*)malloc(sequence->length * sizeof(int));
+    Connection* connections = (Connection*)malloc(sequence->length * sizeof(Connection));
+
+    // Initializes longestPath length and start index variables
+    int longestPathLength = 0;
+    int longestPathIndex = 0;
 
     // The process starts from the lowest Y coordinate to the highest
-    int longestPathLength = 0;
     for (int i = 0; i < sequence->length; i++) {
         // If there is a point, the connection is at least 1
-        connections[i] = 1;
+        connections[i].connections = 1;
 
         // Searches for the point j (below point i) that has more connections
-        int greatestSubLength = 1;
+        int greatestSubLength = 0;
         for (int j = i - 1; j >= 0; j--) {
             if (validPoint(sequence->points[j], sequence->points[i], a, b)) {
-                if (connections[j] > greatestSubLength) {
-                    greatestSubLength = connections[j];
+                if (connections[j].connections > greatestSubLength) {
+                    greatestSubLength = connections[j].connections;
+                    connections[i].indexNext = j;
                 }
             }
         }
 
         // Adds the greatest point j connections to the point i connections
-        connections[i] += greatestSubLength;
+        connections[i].connections += greatestSubLength;
 
         // The longestPathLength is the greatest number of connections of all points
-        if (connections[i] > longestPathLength) {
-            longestPathLength = connections[i];
+        if (connections[i].connections > longestPathLength) {
+            longestPathLength = connections[i].connections;
+            longestPathIndex = i;
         }
     }
 
+    printSequence(sequence);
+
     // Creates the sequence based on the connections previously created
     Sequence longestPath = createSequence(longestPathLength);
-    for (int i = sequence->length - 1; i >= 0 && longestPathLength > 0; i--) {
-        if (connections[i] == longestPathLength) {
-            addToSequence(&longestPath, sequence->points[i]);
-            longestPathLength--;
-        }
+    int index = longestPathIndex;
+    for (int i = 0; i < longestPathLength; i++) {
+        addToSequence(&longestPath, sequence->points[index]);
+        index = connections[index].indexNext;
     }
 
     // Deallocates the connections array

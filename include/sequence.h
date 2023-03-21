@@ -8,6 +8,11 @@ typedef struct {
     int length;
 } Sequence;
 
+typedef struct {
+    int connections;
+    int indexNext;
+} Connection;
+
 Sequence createSequence(int);
 void addToSequence(Sequence *, Point);
 void printSequence(Sequence *);
