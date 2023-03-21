@@ -4,17 +4,13 @@
 #include "pointlib.h"
 
 typedef struct {
-    Point point;
-    int connections;
-} Element;
-
-typedef struct {
-    Element *data;
+    Point *points;
     int length;
 } Sequence;
 
 Sequence createSequence(int);
 void addToSequence(Sequence *, Point);
-int getGreatestPathLength(Sequence *, Point, Point);
+void printSequence(Sequence *);
+Sequence getLongestPath(Sequence *, Point, Point);
 
 #endif

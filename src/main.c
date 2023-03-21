@@ -10,18 +10,20 @@ int main(int argc, char* argv[]) {
     char *inputPath, *outputPath;
     getArgs(&inputPath, &outputPath, argc, argv);
 
-    // Creates A, B and all other points from the input file
+    // Gets A, B and all other points from the input file
     Point a, b;
     Sequence inputPoints = getPointsInput(inputPath, &a, &b);
 
-    // Gets the greatest path between all points
-    int greatestPathLength = getGreatestPathLength(&inputPoints, a, b);
+    // Gets the longest path between all points
+    Sequence longestPath = getLongestPath(&inputPoints, a, b);
 
-    // Saves the greatest path length to the output file
-    saveGreatestPathLengthOutput(outputPath, greatestPathLength);
+    // Saves the longest path length to the output file
+    saveLongestPathLengthOutput(outputPath, longestPath.length);
+    printSequence(&longestPath);
 
-    // Deallocates inputPoints and longestPath pointers
-    free(inputPoints.data);
+    // Deallocates inputPoints and longestPath data pointers
+    free(inputPoints.points);
+    free(longestPath.points);
 
     return 0;
 }

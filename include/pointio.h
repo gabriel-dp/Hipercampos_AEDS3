@@ -7,6 +7,6 @@
 void sortSequenceByY(Sequence*);
 void throwError(char*, char*);
 Sequence getPointsInput(char*, Point*, Point*);
-void saveGreatestPathLengthOutput(char*, int);
+void saveLongestPathLengthOutput(char*, int);
 
 #endif

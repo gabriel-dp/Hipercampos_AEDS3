@@ -9,14 +9,14 @@ void sortSequenceByY(Sequence* sequence) {
     for (int i = 0; i < sequence->length; i++) {
         min = i;
         for (int j = i + 1; j < sequence->length; j++) {
-            if (sequence->data[j].point.y < sequence->data[min].point.y) {
+            if (sequence->points[j].y < sequence->points[min].y) {
                 min = j;
             }
         }
         if (min != i) {
-            Point aux = sequence->data[min].point;
-            sequence->data[min].point = sequence->data[i].point;
-            sequence->data[i].point = aux;
+            Point aux = sequence->points[min];
+            sequence->points[min] = sequence->points[i];
+            sequence->points[i] = aux;
         }
     }
 }
@@ -41,7 +41,7 @@ Sequence getPointsInput(char* inputPath, Point* a, Point* b) {
     a->y = 0;
     b->y = 0;
 
-    // Creates an array and fill it with the points from the input file
+    // Creates an sequence and fill it with the points from the input file
     Sequence allPoints = createSequence(length);
     for (int i = 0; i < length; i++) {
         Point newPoint;
@@ -61,7 +61,7 @@ Sequence getPointsInput(char* inputPath, Point* a, Point* b) {
 }
 
 // The output is the number of points in the longest path
-void saveGreatestPathLengthOutput(char* outputPath, int value) {
+void saveLongestPathLengthOutput(char* outputPath, int value) {
     // Try to open the output file in write mode
     FILE* outputFile = fopen(outputPath, "w");
     if (outputFile == NULL) throwError("OUTPUT", "Cannot write file");

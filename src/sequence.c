@@ -6,7 +6,7 @@
 // Creates a new empty Sequence
 Sequence createSequence(int length) {
     Sequence newSequence;
-    newSequence.data = (Element*)malloc(length * sizeof(Element));
+    newSequence.points = (Point*)malloc(length * sizeof(Point));
     newSequence.length = 0;
 
     return newSequence;
@@ -14,29 +14,53 @@ Sequence createSequence(int length) {
 
 // Adds a new point to a Sequence
 void addToSequence(Sequence* sequence, Point point) {
-    sequence->data[sequence->length].point = point;
-    sequence->data[sequence->length].connections = 1;
+    sequence->points[sequence->length] = point;
     sequence->length++;
 }
 
-// Call the function to search sequences and returns the one with the longest path
-int getGreatestPathLength(Sequence* sequence, Point a, Point b) {
-    int greatestLength = 0;
+// Prints each point coordinates from sequence
+void printSequence(Sequence* sequence) {
+    printf("Sequence length: %d\n", sequence->length);
+    if (sequence->length == 0) return;
 
     for (int i = 0; i < sequence->length; i++) {
+        printf("|(%d, %d)", sequence->points[i].x, sequence->points[i].y);
+    }
+    printf("|\n");
+}
+
+// Call the function to search sequences and returns the one with the longest path
+Sequence getLongestPath(Sequence* sequence, Point a, Point b) {
+    int* connections = (int*)calloc(sequence->length, sizeof(int));
+
+    int greatestLength = 0;
+    for (int i = 0; i < sequence->length; i++) {
+        connections[i]++;
+
         int greatestSubLength = 0;
         for (int j = i - 1; j >= 0; j--) {
-            if (validPoint(sequence->data[j].point, sequence->data[i].point, a, b)) {
-                if (sequence->data[j].connections > greatestSubLength) {
-                    greatestSubLength = sequence->data[j].connections;
+            if (validPoint(sequence->points[j], sequence->points[i], a, b)) {
+                if (connections[j] > greatestSubLength) {
+                    greatestSubLength = connections[j];
                 }
             }
         }
-        sequence->data[i].connections += greatestSubLength;
-        if (sequence->data[i].connections > greatestLength) {
-            greatestLength = sequence->data[i].connections;
+
+        connections[i] += greatestSubLength;
+        if (connections[i] > greatestLength) {
+            greatestLength = connections[i];
         }
     }
 
-    return greatestLength;
+    Sequence longestPath = createSequence(greatestLength);
+    for (int i = sequence->length - 1; i >= 0 && greatestLength > 0; i--) {
+        if (connections[i] == greatestLength) {
+            addToSequence(&longestPath, sequence->points[i]);
+            greatestLength--;
+        }
+    }
+
+    free(connections);
+
+    return longestPath;
 }
