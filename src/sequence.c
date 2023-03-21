@@ -29,6 +29,11 @@ void printSequence(Sequence* sequence) {
     printf("|\n");
 }
 
+// Deallocates a sequence points array
+void freeSequence(Sequence* sequence) {
+    free(sequence->points);
+}
+
 // Search sequences and returns the one with the longest path
 Sequence getLongestPath(Sequence* sequence, Point a, Point b) {
     // Creates an temp array to store each point connections number

@@ -22,8 +22,8 @@ int main(int argc, char* argv[]) {
     printSequence(&longestPath);
 
     // Deallocates inputPoints and longestPath data pointers
-    free(inputPoints.points);
-    free(longestPath.points);
+    freeSequence(&inputPoints);
+    freeSequence(&longestPath);
 
     return 0;
 }
