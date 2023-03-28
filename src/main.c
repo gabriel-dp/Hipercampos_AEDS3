@@ -1,3 +1,10 @@
+/*============================================================
+    #define SUBJECT "Algoritmos e Estruturas de Dados III"
+    #define WORK "Trabalho Pŕatico 1 - Hipercampos"
+    #define PROFESSOR "Leo Rocha"
+    #define STUDENTS ["Davi dos Reis", "Gabriel de Paula"]
+============================================================*/
+
 #include "../include/args.h"
 #include "../include/pointio.h"
 #include "../include/pointlib.h"
