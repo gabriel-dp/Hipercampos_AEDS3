@@ -7,9 +7,9 @@
 #define STUDENTS ["Davi dos Reis", "Gabriel de Paula"]
 ```
 
-[`> Click here to see the INSTRUCTIONS (PT-BR)<`](./docs/instructions-ptbr.pdf)
+[`> Click here to see the documentation<`](./docs)
 
-[`> Click here to see the DOCUMENTATION (PT-BR)<`](./docs/documentation-ptbr.pdf)
+&nbsp;
 
 ## 🖥 Running the program
 
