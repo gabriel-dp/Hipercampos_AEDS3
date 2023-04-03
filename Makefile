@@ -2,12 +2,12 @@
 CC := gcc
 
 # Final file name
-BINARY := out
+BINARY := tp1
 
 # Code directory structure
 SRCDIR := src
 INCDIR := include	
-BINDIR := bin
+BINDIR := .
 BUILDDIR := build
 
 # Compiler flags
@@ -26,7 +26,7 @@ all: $(OBJECTS)
 
 # Rule for object binaries compilation
 $(BUILDDIR)/%.o: $(SRCDIR)/%.c
-	@ if [ ! -d ./$(BINDIR) ]; then mkdir -p $(BUILDDIR);fi
+	@ if [ ! -d ./$(BUILDDIR) ]; then mkdir -p $(BUILDDIR);fi
 	$(CC) -c $^ -o $@ $(CFLAGS) 
 
 
@@ -34,4 +34,4 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.c
 # Clean BIN and BUILD dirs
 .PHONY: clean
 clean: 
-	rm -rf $(BUILDDIR) $(BINDIR)
+	rm -rf $(BUILDDIR) $(BINDIR)/$(BINARY) $(BINDIR)
